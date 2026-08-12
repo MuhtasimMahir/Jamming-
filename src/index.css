@@ -1,13 +1,304 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import 'tailwindcss';
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/600.css';
+@import '@fontsource/manrope/700.css';
+@import '@fontsource/manrope/800.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — "Night Session"                                     */
+/* Dark is the default surface; light overrides live under             */
+/* [data-theme="light"]. Every color is referenced through these       */
+/* variables so the whole app repaints on a single attribute flip.     */
+/* ------------------------------------------------------------------ */
+:root,
+[data-theme='dark'] {
+  --canvas: #0b0e1a;
+  --canvas-raised: #0f1324;
+  --surface: #12162a;
+  --surface-raised: #1a1f3a;
+  --surface-hover: #20264a;
+  --surface-active: #262c52;
+  --border: #262c4d;
+  --border-strong: #343b6b;
+
+  --text-primary: #f4f3fb;
+  --text-secondary: #9ca0c2;
+  --text-tertiary: #6a6e93;
+  --text-on-accent: #ffffff;
+
+  --accent: #7c5cfc;
+  --accent-text: #9d89ff;
+  --accent-solid: #6e4ff0;
+  --accent-hover: #8f73ff;
+  --accent-wash: rgb(124 92 252 / 16%);
+  --accent-wash-strong: rgb(124 92 252 / 28%);
+
+  --ember: #ff9d5c;
+  --ember-text: #ffb27e;
+  --ember-wash: rgb(255 157 92 / 16%);
+
+  --success: #4ade80;
+  --success-wash: rgb(74 222 128 / 16%);
+  --warning: #fbbf24;
+  --warning-wash: rgb(251 191 36 / 16%);
+  --danger: #fb6b6b;
+  --danger-text: #ff8087;
+  --danger-solid: #dc3d45;
+  --danger-wash: rgb(251 107 107 / 14%);
+
+  --shadow-color: 245 65% 3%;
+  --scrim: rgb(5 6 14 / 72%);
+
+  color-scheme: dark;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+[data-theme='light'] {
+  --canvas: #f7f7fc;
+  --canvas-raised: #ffffff;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-hover: #f0eefa;
+  --surface-active: #e7e4f8;
+  --border: #e4e3f3;
+  --border-strong: #d3d1ea;
+
+  --text-primary: #14162b;
+  --text-secondary: #5b5e7e;
+  --text-tertiary: #8b8eae;
+  --text-on-accent: #ffffff;
+
+  --accent: #6c41ec;
+  --accent-text: #6c41ec;
+  --accent-solid: #6c41ec;
+  --accent-hover: #7c53f5;
+  --accent-wash: rgb(108 65 236 / 10%);
+  --accent-wash-strong: rgb(108 65 236 / 18%);
+
+  --ember: #e8763a;
+  --ember-text: #cf631f;
+  --ember-wash: rgb(232 118 58 / 12%);
+
+  --success: #16a34a;
+  --success-wash: rgb(22 163 74 / 12%);
+  --warning: #d97706;
+  --warning-wash: rgb(217 119 6 / 12%);
+  --danger: #dc3d45;
+  --danger-text: #c02832;
+  --danger-solid: #dc3d45;
+  --danger-wash: rgb(220 61 69 / 10%);
+
+  --shadow-color: 245 30% 60%;
+  --scrim: rgb(20 22 43 / 40%);
+
+  color-scheme: light;
+}
+
+@theme {
+  --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, sans-serif;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --color-canvas: var(--canvas);
+  --color-canvas-raised: var(--canvas-raised);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-on-accent: var(--text-on-accent);
+
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-wash: var(--accent-wash);
+
+  --color-ember: var(--ember);
+  --color-ember-text: var(--ember-text);
+  --color-ember-wash: var(--ember-wash);
+
+  --color-success: var(--success);
+  --color-success-wash: var(--success-wash);
+  --color-warning: var(--warning);
+  --color-warning-wash: var(--warning-wash);
+  --color-danger: var(--danger);
+  --color-danger-text: var(--danger-text);
+  --color-danger-solid: var(--danger-solid);
+  --color-danger-wash: var(--danger-wash);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+
+  --animate-eq: eq 1s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-slide-up: slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes eq {
+    0%,
+    100% {
+      transform: scaleY(0.35);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    color-scheme: light dark;
+  }
+  body {
+    background-color: var(--canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--accent-wash-strong);
+    color: var(--text-primary);
+  }
+
+  /* Slim, theme-aware scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Range slider — used for the seek bar and volume control. Fill amount is
+   driven by the --range-progress custom property set inline per-instance. */
+.range-slider {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    var(--accent) 0%,
+    var(--accent) var(--range-progress, 0%),
+    var(--border-strong) var(--range-progress, 0%),
+    var(--border-strong) 100%
+  );
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent-solid);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  opacity: 0;
+}
+.range-slider:hover::-webkit-slider-thumb,
+.range-slider:focus-visible::-webkit-slider-thumb,
+.range-slider.always-show-thumb::-webkit-slider-thumb {
+  opacity: 1;
+}
+.range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.range-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border-strong);
+}
+.range-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+.range-slider::-moz-range-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent-solid);
+  cursor: pointer;
+  opacity: 0;
+}
+.range-slider:hover::-moz-range-thumb,
+.range-slider:focus-visible::-moz-range-thumb,
+.range-slider.always-show-thumb::-moz-range-thumb {
+  opacity: 1;
 }
